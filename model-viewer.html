@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>3D Model Viewer</title>
+  <!-- Import the model-viewer component -->
+  <script type="module" src="https://ajax.googleapis.com/ajax/libs/model-viewer/4.0.0/model-viewer.min.js"></script>
+  <style>
+    body {
+      margin: 0;
+      background-color: #222;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+    }
+    model-viewer {
+      width: 90%;
+      max-width: 800px;
+      height: 90%;
+      max-height: 600px;
+      background-color: #fff;
+      border: 2px solid #444;
+    }
+  </style>
+</head>
+<body>
+  <model-viewer id="viewer"
+    alt="3D Model"
+    shadow-intensity="1"
+    camera-controls
+    camera-orbit="0deg 180deg 1.7m"
+    min-camera-orbit="auto auto 1%"
+    max-camera-orbit="auto auto 100%"
+    model-position="0 0.5 0"
+    model-rotation="10deg 55deg 1deg"
+    touch-action="pan-y">
+  </model-viewer>
+
+  <script>
+    // Function to get a query parameter by name
+    function getQueryParam(param) {
+      const urlParams = new URLSearchParams(window.location.search);
+      return urlParams.get(param);
+    }
+
+    // Use the 'model' parameter from the URL; default to 'model' if not provided
+    const modelParam = getQueryParam("model") || "model";
+
+    // Dynamically construct the asset paths based on the model parameter
+    const srcPath = "models/" + modelParam + ".glb";
+    const posterPath = "shared-assets/models/" + modelParam + ".webp";
+    const altText = "3D model: " + modelParam;
+
+    // Update the model-viewer element with the dynamic paths
+    const viewer = document.getElementById("viewer");
+    viewer.src = srcPath;
+    viewer.poster = posterPath;
+    viewer.alt = altText;
+  </script>
+</body>
+</html>
