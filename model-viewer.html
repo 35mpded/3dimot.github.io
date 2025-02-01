@@ -7,21 +7,22 @@
   <!-- Import the model-viewer component -->
   <script type="module" src="https://ajax.googleapis.com/ajax/libs/model-viewer/4.0.0/model-viewer.min.js"></script>
   <style>
-    body {
+    /* Remove all margins and paddings, hide any scrollbars */
+    html, body {
       margin: 0;
-      background-color: #222;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      height: 100vh;
+      padding: 0;
+      overflow: hidden;
+      background-color: #222; /* Or set to transparent if you prefer */
+      height: 100%;
+      width: 100%;
     }
+    /* Make the model viewer fill the entire viewport */
     model-viewer {
-      width: 90%;
-      max-width: 800px;
-      height: 90%;
-      max-height: 600px;
-      background-color: #fff;
-      border: 2px solid #444;
+      display: block; /* removes inline spacing if any */
+      width: 100vw;
+      height: 100vh;
+      border: none;
+      background-color: #fff; /* This is the scene container's background */
     }
   </style>
 </head>
@@ -45,8 +46,8 @@
       return urlParams.get(param);
     }
 
-    // Use the 'model' parameter from the URL; default to 'model' if not provided
-    const modelParam = getQueryParam("model") || "model";
+    // Use the 'model' parameter from the URL; default to 'model1' if not provided
+    const modelParam = getQueryParam("model") || "model1";
 
     // Dynamically construct the asset paths based on the model parameter
     const srcPath = "models/" + modelParam + ".glb";
