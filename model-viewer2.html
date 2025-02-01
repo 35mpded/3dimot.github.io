@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>3D Model Viewer</title>
+  <!-- Import the model-viewer component -->
+  <script type="module" src="https://ajax.googleapis.com/ajax/libs/model-viewer/4.0.0/model-viewer.min.js"></script>
+  <style>
+    /* Remove all margins and paddings, hide any scrollbars */
+    html, body {
+      margin: 0;
+      padding: 0;
+      overflow: hidden;
+      background-color: #222; /* Or set to transparent if you prefer */
+      height: 100%;
+      width: 100%;
+    }
+    /* Make the model viewer fill the entire viewport */
+    model-viewer {
+      display: block; /* removes inline spacing if any */
+      width: 100vw;
+      height: 100vh;
+      border: none;
+      background-color: #fff; /* This is the scene container's background */
+    }
+  </style>
+</head>
+<body>
+  <model-viewer id="viewer"
+    alt="3D Model"
+    shadow-intensity="1"
+    camera-controls
+    camera-orbit="0deg 180deg 1.7m"
+    min-camera-orbit="auto auto 1%"
+    max-camera-orbit="auto auto 100%"
+    model-position="0 0.5 0"
+    model-rotation="10deg 55deg 1deg"
+    touch-action="pan-y">
+  </model-viewer>
+
+  <script>
+    // Function to get a query parameter by name
+    function getQueryParam(param) {
+      const urlParams = new URLSearchParams(window.location.search);
+      return urlParams.get(param);
+    }
+
+    // Use the 'model' parameter from the URL; default to 'model1' if not provided
+    const modelParam = getQueryParam("model") || "model1";
+
+    // Dynamically construct the asset paths based on the model parameter
+    const srcPath = "models/" + modelParam + ".glb";
+    const posterPath = "shared-assets/models/" + modelParam + ".webp";
+    const altText = "3D model: " + modelParam;
+
+    // Update the model-viewer element with the dynamic paths
+    const viewer = document.getElementById("viewer");
+    viewer.src = srcPath;
+    viewer.poster = posterPath;
+    viewer.alt = altText;
+  </script>
+</body>
+</html>
